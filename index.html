@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Text rendered and scaling on tablets sorted with the two lines above -->
+    <title>Hansard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Hansard</h1>
+        <p>What is Hansard?</p>
+        <ul>
+            <li>Hansard is a project by <a href="https://xandidrysdale.com">Xandi Drysdale</a> that uses the UK Gov API</li>
+            <li>It is a project to practice making a backend for a web app</li>
+            <li>It answers the following user stories</li>
+            <ol>
+                <li>A profile of member Y</li>
+                <li>What debates has Y been in, in the past year?</li>
+                <li>Who was in a specific debate?</li>
+                <li>What did Y vote for in a debate with Z motion?</li>
+                <li>A visual of the house of commons, voting and profiles.</li>
+            </ol>
+        </ul>
+    </header>
+    <main>
+        <div class="MOP profile">
+            <p>Search for Members of Parliement to find their profile</p>
+            <div>
+                <form action="/mop_profile" method="get">
+                    <label for="mop_name">MOP Name:</label>
+                    <input type="text" id="mop_name" name="mop_name" required>
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+        </div>
+        <div class="MOP recent debates">
+            <p>Search for recent debates a MOP was in</p>
+        </div>
+        <div class="debate participation">
+            <p>Search for debates by date or topic and see who attended + an AI summary</p>
+        </div>
+        <div class="voting record">
+            <p>Search for a MOP and see how they voted on different motions</p>
+        </div>
+        <div class="visual commons">
+            <p>Visual representation of the house of commons and voting records</p>
+        </div>
+    </main>
+    <footer>
+        <p>Hansard &copy; Xandi Drysdale</p>
+    </footer>
+
+
+</body>
