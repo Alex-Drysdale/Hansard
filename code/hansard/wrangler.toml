@@ -1,0 +1,11 @@
+# Cloudflare Pages configuration
+name = "hansard"
+compatibility_date = "2025-01-01"
+
+# Pages-specific settings
+[site]
+bucket = "./dist"
+
+# Environment variables (add any API keys here if needed)
+[vars]
+ENVIRONMENT = "production"
