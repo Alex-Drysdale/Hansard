@@ -1,0 +1,29 @@
+{
+  "Results": [
+    {
+      "DebateSection": "Commons Chamber",
+      "SittingDate": "2026-01-14T00:00:00",
+      "House": "Commons",
+      "Title": "Public Order",
+      "Rank": 0,
+      "DebateSectionExtId": "9969E436-926F-463C-8323-059D1158DF4A"
+    },
+    {
+      "DebateSection": "Commons Chamber",
+      "SittingDate": "2026-01-14T00:00:00",
+      "House": "Commons",
+      "Title": "Deferred Divisions",
+      "Rank": 0,
+      "DebateSectionExtId": "DeferredDivisions2026-01-14"
+    },
+    {
+      "DebateSection": "Commons Chamber",
+      "SittingDate": "2026-01-14T00:00:00",
+      "House": "Commons",
+      "Title": "Oil Refining Sector",
+      "Rank": 0,
+      "DebateSectionExtId": "69FFB3CB-33EF-41DD-94B0-E8685BEB39EF"
+    }
+  ],
+  "TotalResultCount": 3
+}

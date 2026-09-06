@@ -1,0 +1,128 @@
+{
+  "Overview": {
+    "Id": 5246089,
+    "ExtId": "565DB7B1-4CBD-4BD7-86F2-F89DAC86A758",
+    "Title": "Petition",
+    "HRSTag": "hs_6bPetitions",
+    "Date": "2026-03-03T00:00:00",
+    "Location": "Commons Chamber",
+    "House": "Commons",
+    "Source": 2,
+    "VolumeNo": 781,
+    "ContentLastUpdated": "2026-03-06T16:30:24.137",
+    "DebateTypeId": 1,
+    "SectionType": 1,
+    "NextDebateExtId": "9E7344FE-4391-493B-9CAC-9B78A632D49C",
+    "NextDebateTitle": " SEND Provision: Local Authorities",
+    "PreviousDebateExtId": "DFE85B82-2AB4-4DE9-A0C2-8C0BF709245D",
+    "PreviousDebateTitle": "Delegated Legislation"
+  },
+  "Navigator": [
+    {
+      "Id": 5246068,
+      "Title": "Commons Chamber",
+      "ParentId": null,
+      "SortOrder": 1,
+      "ExternalId": "96646e4f-3b30-422d-99af-ed7fd3d8a469",
+      "HRSTag": null,
+      "HansardSection": null,
+      "Timecode": null
+    },
+    {
+      "Id": 5246089,
+      "Title": "Petition",
+      "ParentId": 5246068,
+      "SortOrder": 22,
+      "ExternalId": "565DB7B1-4CBD-4BD7-86F2-F89DAC86A758",
+      "HRSTag": "hs_6bPetitions",
+      "HansardSection": "BK-BM",
+      "Timecode": null
+    }
+  ],
+  "Items": [],
+  "ChildDebates": [
+    {
+      "Overview": {
+        "Id": 5246090,
+        "ExtId": "A947B3C4-10C7-4848-BC30-2044AD943FB4",
+        "Title": "A5036 Park Lane footbridge",
+        "HRSTag": "hs_8Petition",
+        "Date": "2026-03-03T00:00:00",
+        "Location": "Commons Chamber",
+        "House": "Commons",
+        "Source": 2,
+        "VolumeNo": 781,
+        "ContentLastUpdated": "2026-03-06T16:30:24.137",
+        "DebateTypeId": 1,
+        "SectionType": 1,
+        "NextDebateExtId": "9E7344FE-4391-493B-9CAC-9B78A632D49C",
+        "NextDebateTitle": " SEND Provision: Local Authorities",
+        "PreviousDebateExtId": "DFE85B82-2AB4-4DE9-A0C2-8C0BF709245D",
+        "PreviousDebateTitle": "Delegated Legislation"
+      },
+      "Navigator": [
+        {
+          "Id": 5246068,
+          "Title": "Commons Chamber",
+          "ParentId": null,
+          "SortOrder": 1,
+          "ExternalId": "96646e4f-3b30-422d-99af-ed7fd3d8a469",
+          "HRSTag": null,
+          "HansardSection": null,
+          "Timecode": null
+        },
+        {
+          "Id": 5246089,
+          "Title": "Petition",
+          "ParentId": 5246068,
+          "SortOrder": 22,
+          "ExternalId": "565DB7B1-4CBD-4BD7-86F2-F89DAC86A758",
+          "HRSTag": "hs_6bPetitions",
+          "HansardSection": "BK-BM",
+          "Timecode": null
+        },
+        {
+          "Id": 5246090,
+          "Title": "A5036 Park Lane footbridge",
+          "ParentId": 5246089,
+          "SortOrder": 23,
+          "ExternalId": "A947B3C4-10C7-4848-BC30-2044AD943FB4",
+          "HRSTag": "hs_8Petition",
+          "HansardSection": "BK-BM",
+          "Timecode": null
+        }
+      ],
+      "ChildDebates": [],
+      "Items": [
+        {
+          "ItemType": "Timestamp",
+          "ItemId": 3516608,
+          "MemberId": null,
+          "AttributedTo": "",
+          "Value": "15:49:00",
+          "OrderInSection": 1,
+          "Timecode": null,
+          "ExternalId": null,
+          "HRSTag": null,
+          "HansardSection": "BK-BM",
+          "UIN": null,
+          "IsReiteration": false
+        },
+        {
+          "ItemType": "Contribution",
+          "ItemId": 48226966,
+          "MemberId": 4397,
+          "AttributedTo": "Peter Dowd (Bootle) (Lab)",
+          "Value": "The original footbridge over the A5036 at Park Lane, Netherton, provided a safe crossing for thousands of children and adults for decades. The petitioners therefore request that the House of Commons urges the Government to ensure that the pedestrian footbridge over the A5036 at Park Lane West junction is rebuilt, honouring the original promise to restore the bridge and ensuring safe and convenient access for the community.\r\n\r\nThe petition states:\r\n\r\nThe petition of residents of the constituency of Bootle, Merseyside,\r\n\r\nDeclares that the footbridge over the A5036 at Park Lane West Junction should be rebuilt because the removal of the bridge in 2022 has caused significant inconvenience and safety concerns; further declares that the original bridge provided a safe crossing for thousands of children and adults for decades; and further declares that the proposed alternative crossing does not meet the needs of local residents and users.\r\n\r\nThe petitioners therefore request that the House of Commons urge the Government to ensure that the pedestrian footbridge over the A5036 at Park Lane West Junction is rebuilt, honouring the original promise to restore the bridge and ensuring safe and convenient access for the community.\r\n\r\nAnd the petitioners remain, etc.\r\n\r\n[P003166]",
+          "OrderInSection": 2,
+          "Timecode": null,
+          "ExternalId": "FEBA584C-2FE8-4BE9-A742-781ACF1CF775",
+          "HRSTag": "hs_Para",
+          "HansardSection": "BK-BM",
+          "UIN": null,
+          "IsReiteration": false
+        }
+      ]
+    }
+  ]
+}
