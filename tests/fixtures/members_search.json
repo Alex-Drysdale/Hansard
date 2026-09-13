@@ -1,0 +1,212 @@
+{
+  "items": [
+    {
+      "value": {
+        "id": 172,
+        "nameListAs": "Abbott, Ms Diane",
+        "nameDisplayAs": "Ms Diane Abbott",
+        "nameFullTitle": "Rt Hon Diane Abbott MP",
+        "nameAddressAs": "Ms Abbott",
+        "latestParty": {
+          "id": 15,
+          "name": "Labour",
+          "abbreviation": "Lab",
+          "backgroundColour": "d50000",
+          "foregroundColour": "ffffff",
+          "isLordsMainParty": true,
+          "isLordsSpiritualParty": true,
+          "governmentType": 0,
+          "isIndependentParty": false
+        },
+        "gender": "F",
+        "latestHouseMembership": {
+          "membershipFrom": "Hackney North and Stoke Newington",
+          "membershipFromId": 4074,
+          "house": 1,
+          "membershipStartDate": "1987-06-11T00:00:00",
+          "membershipEndDate": null,
+          "membershipEndReason": null,
+          "membershipEndReasonNotes": null,
+          "membershipEndReasonId": null,
+          "membershipStatus": {
+            "statusIsActive": true,
+            "statusDescription": "Current Member",
+            "statusNotes": null,
+            "statusId": 0,
+            "status": 0,
+            "statusStartDate": "2024-07-04T00:00:00"
+          }
+        },
+        "thumbnailUrl": "https://members-api.parliament.uk/api/Members/172/Thumbnail"
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "/Members/172",
+          "method": "GET"
+        },
+        {
+          "rel": "overview",
+          "href": "/Members/172",
+          "method": "GET"
+        },
+        {
+          "rel": "synopsis",
+          "href": "/Members/172/Synopsis",
+          "method": "GET"
+        },
+        {
+          "rel": "contactInformation",
+          "href": "/Members/172/Contact",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "value": {
+        "id": 5131,
+        "nameListAs": "Abbott, Jack",
+        "nameDisplayAs": "Jack Abbott",
+        "nameFullTitle": "Jack Abbott MP",
+        "nameAddressAs": null,
+        "latestParty": {
+          "id": 15,
+          "name": "Labour (Co-op)",
+          "abbreviation": "Lab",
+          "backgroundColour": "d50000",
+          "foregroundColour": "ffffff",
+          "isLordsMainParty": true,
+          "isLordsSpiritualParty": true,
+          "governmentType": 0,
+          "isIndependentParty": false
+        },
+        "gender": "M",
+        "latestHouseMembership": {
+          "membershipFrom": "Ipswich",
+          "membershipFromId": 4117,
+          "house": 1,
+          "membershipStartDate": "2024-07-04T00:00:00",
+          "membershipEndDate": null,
+          "membershipEndReason": null,
+          "membershipEndReasonNotes": null,
+          "membershipEndReasonId": null,
+          "membershipStatus": {
+            "statusIsActive": true,
+            "statusDescription": "Current Member",
+            "statusNotes": null,
+            "statusId": 0,
+            "status": 0,
+            "statusStartDate": "2024-07-04T00:00:00"
+          }
+        },
+        "thumbnailUrl": "https://members-api.parliament.uk/api/Members/5131/Thumbnail"
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "/Members/5131",
+          "method": "GET"
+        },
+        {
+          "rel": "overview",
+          "href": "/Members/5131",
+          "method": "GET"
+        },
+        {
+          "rel": "synopsis",
+          "href": "/Members/5131/Synopsis",
+          "method": "GET"
+        },
+        {
+          "rel": "contactInformation",
+          "href": "/Members/5131/Contact",
+          "method": "GET"
+        }
+      ]
+    },
+    {
+      "value": {
+        "id": 4212,
+        "nameListAs": "Abrahams, Debbie",
+        "nameDisplayAs": "Debbie Abrahams",
+        "nameFullTitle": "Debbie Abrahams MP",
+        "nameAddressAs": "Debbie Abrahams",
+        "latestParty": {
+          "id": 15,
+          "name": "Labour",
+          "abbreviation": "Lab",
+          "backgroundColour": "d50000",
+          "foregroundColour": "ffffff",
+          "isLordsMainParty": true,
+          "isLordsSpiritualParty": true,
+          "governmentType": 0,
+          "isIndependentParty": false
+        },
+        "gender": "F",
+        "latestHouseMembership": {
+          "membershipFrom": "Oldham East and Saddleworth",
+          "membershipFromId": 4230,
+          "house": 1,
+          "membershipStartDate": "2011-01-13T00:00:00",
+          "membershipEndDate": null,
+          "membershipEndReason": null,
+          "membershipEndReasonNotes": null,
+          "membershipEndReasonId": null,
+          "membershipStatus": {
+            "statusIsActive": true,
+            "statusDescription": "Current Member",
+            "statusNotes": null,
+            "statusId": 0,
+            "status": 0,
+            "statusStartDate": "2024-07-04T00:00:00"
+          }
+        },
+        "thumbnailUrl": "https://members-api.parliament.uk/api/Members/4212/Thumbnail"
+      },
+      "links": [
+        {
+          "rel": "self",
+          "href": "/Members/4212",
+          "method": "GET"
+        },
+        {
+          "rel": "overview",
+          "href": "/Members/4212",
+          "method": "GET"
+        },
+        {
+          "rel": "synopsis",
+          "href": "/Members/4212/Synopsis",
+          "method": "GET"
+        },
+        {
+          "rel": "contactInformation",
+          "href": "/Members/4212/Contact",
+          "method": "GET"
+        }
+      ]
+    }
+  ],
+  "totalResults": 649,
+  "resultContext": "",
+  "skip": 0,
+  "take": 3,
+  "links": [
+    {
+      "rel": "self",
+      "href": "/Members/Search?skip=0&take=3",
+      "method": "GET"
+    },
+    {
+      "rel": "page.next",
+      "href": "/Members/Search?skip=3&take=3",
+      "method": "GET"
+    },
+    {
+      "rel": "page.previous",
+      "href": "/Members/Search?skip=0&take=3",
+      "method": "GET"
+    }
+  ],
+  "resultType": "House, Status"
+}

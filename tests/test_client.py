@@ -14,12 +14,12 @@ import pytest
 import respx
 
 from hansard.api.client import (
-    HansardApiError,
+    ApiError,
     HansardClient,
-    HansardNotFoundError,
-    RateLimiter,
+    NotFoundError,
     months_between,
 )
+from hansard.api.http import RateLimiter
 from hansard.config import Settings
 from tests.conftest import load_fixture
 
@@ -220,7 +220,7 @@ class TestDebate:
         respx.get(f"{BASE}/debates/debate/ABC.json").mock(
             return_value=httpx.Response(200, json={"Overview": {"nope": True}})
         )
-        with pytest.raises(HansardApiError, match="Unexpected debate payload"):
+        with pytest.raises(ApiError, match="Unexpected debate payload"):
             client.debate("ABC")
 
 
@@ -266,7 +266,7 @@ class TestRetries:
         self, client: HansardClient, settings: Settings
     ) -> None:
         route = respx.get(f"{BASE}/debates/debate/ABC.json").mock(return_value=httpx.Response(503))
-        with pytest.raises(HansardApiError, match="failed after"):
+        with pytest.raises(ApiError, match="failed after"):
             client.debate("ABC")
         assert route.call_count == settings.max_retries + 1
 
@@ -274,7 +274,7 @@ class TestRetries:
     def test_a_404_is_not_retried(self, client: HansardClient) -> None:
         # Retrying a missing resource just wastes the API's time.
         route = respx.get(f"{BASE}/debates/debate/ABC.json").mock(return_value=httpx.Response(404))
-        with pytest.raises(HansardNotFoundError):
+        with pytest.raises(NotFoundError):
             client.debate("ABC")
         assert route.call_count == 1
 
@@ -284,8 +284,8 @@ class TestRetries:
 
         # Reported as our own error type, not httpx's: callers should never need
         # to know which HTTP library is underneath, and it lets ingest skip one
-        # bad section by catching HansardApiError rather than aborting the run.
-        with pytest.raises(HansardApiError, match="returned 400"):
+        # bad section by catching ApiError rather than aborting the run.
+        with pytest.raises(ApiError, match="returned 400"):
             client.debate("ABC")
         assert route.call_count == 1
 
@@ -298,7 +298,7 @@ class TestRetries:
                 200, text="<html>not found</html>", headers={"content-type": "text/html"}
             )
         )
-        with pytest.raises(HansardApiError, match="non-JSON"):
+        with pytest.raises(ApiError, match="non-JSON"):
             client.debate("ABC")
 
 

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hansard</title>
+<style>
+  :root {
+    --bg: #faf9f7;
+    --panel: #ffffff;
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --line: #e2e0dc;
+    --accent: #1d4ed8;
+    --accent-soft: #eef2ff;
+    --warn: #a16207;
+    --warn-soft: #fef9e7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16171a; --panel: #1e2024; --ink: #e9e9ea; --muted: #9a9a9e;
+      --line: #2e3138; --accent: #7ea2ff; --accent-soft: #1e2536;
+      --warn: #e0b341; --warn-soft: #2a2415;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 32px 20px 80px; }
+  header { margin-bottom: 24px; }
+  h1 { font-size: 22px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); font-size: 13px; }
+  form { display: flex; gap: 8px; margin: 20px 0 10px; }
+  input[type=text] {
+    flex: 1; padding: 12px 14px; font-size: 15px; font-family: inherit;
+    border: 1px solid var(--line); border-radius: 8px;
+    background: var(--panel); color: var(--ink);
+  }
+  input[type=text]:focus { outline: 2px solid var(--accent); border-color: transparent; }
+  button {
+    padding: 12px 20px; font-size: 15px; font-family: inherit; font-weight: 500;
+    border: 0; border-radius: 8px; background: var(--accent); color: #fff; cursor: pointer;
+  }
+  button:disabled { opacity: .5; cursor: default; }
+  .opts { display: flex; gap: 18px; align-items: center; font-size: 13px; color: var(--muted); }
+  .opts label { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+  .examples { margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+  .examples button {
+    background: none; color: var(--accent); border: 0; padding: 2px 0;
+    font-size: 13px; cursor: pointer; text-decoration: underline; margin-right: 14px;
+  }
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px; padding: 18px 20px; margin-top: 20px;
+  }
+  .answer { white-space: pre-wrap; }
+  .filters {
+    background: var(--accent-soft); border-radius: 8px; padding: 10px 14px;
+    font-size: 13px; color: var(--muted); margin-top: 16px;
+  }
+  .warn { background: var(--warn-soft); color: var(--warn); }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em;
+       color: var(--muted); margin: 28px 0 10px; font-weight: 600; }
+  .passage { border-left: 3px solid var(--line); padding: 2px 0 2px 14px; margin-bottom: 18px; }
+  .passage .meta { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .passage .meta strong { color: var(--ink); font-weight: 600; }
+  .passage .body { font-size: 14px; }
+  .tag {
+    display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 20px;
+    background: var(--accent-soft); color: var(--accent); margin-left: 6px;
+  }
+  .tag.inferred { background: var(--warn-soft); color: var(--warn); }
+  .foot { color: var(--muted); font-size: 12px; margin-top: 10px; }
+  .err { color: #b91c1c; }
+  .spinner { color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Hansard</h1>
+    <div class="sub" id="status">loading…</div>
+  </header>
+
+  <form id="form">
+    <input type="text" id="q" placeholder="What did Wes Streeting say about cancer?" autocomplete="off" autofocus>
+    <button type="submit" id="go">Ask</button>
+  </form>
+
+  <div class="opts">
+    <label><input type="checkbox" id="naive"> naive mode (vector only, no filters)</label>
+    <label><input type="checkbox" id="passagesOnly"> passages only (skip the model)</label>
+  </div>
+
+  <div class="examples">
+    <button type="button" data-q="What did Wes Streeting say about cancer?">cancer / Streeting</button>
+    <button type="button" data-q="What has been said about the cost of living recently?">cost of living</button>
+    <button type="button" data-q="What did Kieran Mullan say about jury trials?">jury trials</button>
+    <button type="button" data-q="What has been said about the Prax Lindsey oil refinery?">Prax Lindsey</button>
+  </div>
+
+  <div id="out"></div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => (s ?? "").replace(/[&<>"']/g, c => (
+  {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+async function loadStatus() {
+  try {
+    const r = await fetch("/api/status");
+    const d = await r.json();
+    if (d.error) { $("status").innerHTML = `<span class="err">${esc(d.error)}</span>`; return; }
+    const idx = d.index.exists
+      ? `${d.index.chunks.toLocaleString()} indexed passages`
+      : `<span class="err">no vector index — run \`hansard index\`</span>`;
+    $("status").innerHTML =
+      `${d.debates.toLocaleString()} debates · ${d.speeches.toLocaleString()} speeches · ` +
+      `${d.members.toLocaleString()} members · ${d.earliest} to ${d.latest} · ${idx}` +
+      (d.can_answer ? ` · ${esc(d.model)}` : ` · <span class="err">no LLM key</span>`);
+  } catch (e) {
+    $("status").innerHTML = `<span class="err">${esc(String(e))}</span>`;
+  }
+}
+
+function renderFilters(f, naive) {
+  if (naive) {
+    return `<div class="filters warn">Naive mode: vector search only, no speaker or date
+      filter. Compare the sources below with normal mode — this is where textbook RAG
+      answers the wrong question confidently.</div>`;
+  }
+  if (!f.notes.length) {
+    return `<div class="filters">No speaker or date filter was detected in this question,
+      so the whole store was searched.</div>`;
+  }
+  return `<div class="filters">Interpreted as: ${f.notes.map(esc).join(" · ")}</div>`;
+}
+
+function renderPassages(ps) {
+  if (!ps.length) return "<h2>Sources</h2><p class='sub'>Nothing matched.</p>";
+  return "<h2>Sources — read these, don't just trust the answer</h2>" + ps.map((p, i) => `
+    <div class="passage">
+      <div class="meta">
+        <strong>[${i + 1}] ${esc(p.citation)}</strong>
+        <span class="tag">${esc(p.sources.join("+"))}</span>
+        ${p.inferred_attribution ? '<span class="tag inferred">attribution inferred</span>' : ""}
+      </div>
+      <div class="body">${esc(p.text)}</div>
+    </div>`).join("");
+}
+
+async function ask(question) {
+  $("out").innerHTML = `<div class="card spinner">Searching…</div>`;
+  $("go").disabled = true;
+  try {
+    const r = await fetch("/api/ask", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        question,
+        naive: $("naive").checked,
+        answer: !$("passagesOnly").checked,
+      }),
+    });
+    const d = await r.json();
+    if (d.error && !d.passages) {
+      $("out").innerHTML = `<div class="card err">${esc(d.error)}</div>`;
+      return;
+    }
+    const answer = d.answer
+      ? `<div class="card"><div class="answer">${esc(d.answer)}</div>
+         ${d.model ? `<div class="foot">${esc(d.model)} · ${d.tokens.toLocaleString()} tokens</div>` : ""}</div>`
+      : (d.error ? `<div class="card err">${esc(d.error)}</div>` : "");
+    $("out").innerHTML =
+      renderFilters(d.filters, $("naive").checked) + answer + renderPassages(d.passages);
+  } catch (e) {
+    $("out").innerHTML = `<div class="card err">${esc(String(e))}</div>`;
+  } finally {
+    $("go").disabled = false;
+  }
+}
+
+$("form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const q = $("q").value.trim();
+  if (q) ask(q);
+});
+document.querySelectorAll(".examples button").forEach(b =>
+  b.addEventListener("click", () => { $("q").value = b.dataset.q; ask(b.dataset.q); }));
+
+loadStatus();
+</script>
+</body>
+</html>

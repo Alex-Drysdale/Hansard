@@ -9,8 +9,9 @@ dist/
 .venv/
 venv/
 
-# The local store. Rebuildable from the API with `hansard ingest`, and far too
-# large to belong in git -- the pipeline is the artefact, not the data.
+# The local store and the vector index. Both are rebuildable -- `hansard ingest`
+# and `hansard index` -- and far too large to belong in git. The pipeline is the
+# artefact, not the data.
 data/
 *.db
 *.db-wal
