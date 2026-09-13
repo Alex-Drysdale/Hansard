@@ -14,6 +14,7 @@ from datetime import date, datetime
 from typing import Annotated, Any
 
 import typer
+from dotenv import find_dotenv, load_dotenv
 from psycopg import Connection
 from psycopg.rows import DictRow
 from rich.console import Console
@@ -883,6 +884,10 @@ def votes(
 
 
 def main() -> None:  # pragma: no cover
+    # Loaded here, at the console entry point, rather than in Settings.from_env:
+    # tests build settings directly, and a developer's local .env must not leak
+    # into them. A real environment variable still beats the file.
+    load_dotenv(find_dotenv(usecwd=True))
     app()
 
 

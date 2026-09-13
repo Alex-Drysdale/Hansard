@@ -17,6 +17,7 @@ dependencies = [
     "yoyo-migrations>=9.0",
     "apscheduler>=3.10",
     "structlog>=24.1",
+    "python-dotenv>=1.0",
     # Retrieval and answering (Phase 3)
     "fastembed>=0.8",
     "lancedb>=0.38",
