@@ -125,3 +125,42 @@ class DebateDetail(_WireModel):
         if len(trail) < 2:
             return None
         return trail[-2].external_id
+
+
+class DivisionSummary(_WireModel):
+    """A division as listed against its debate, without the vote lists."""
+
+    division_id: int = Field(alias="Id")
+    ext_id: str = Field(alias="ExternalId")
+    debate_ext_id: str | None = Field(default=None, alias="DebateSectionExtId")
+    debate_section: str | None = Field(default=None, alias="DebateSection")
+    house: str = Field(alias="House")
+    division_date: datetime = Field(alias="Date")
+    division_time: str | None = Field(default=None, alias="Time")
+    number: str | None = Field(default=None, alias="Number")
+    ayes_count: int = Field(default=0, alias="AyesCount")
+    noes_count: int = Field(default=0, alias="NoesCount")
+    is_committee: bool = Field(default=False, alias="IsCommitteeDivision")
+    text_before_vote: str | None = Field(default=None, alias="TextBeforeVote")
+    text_after_vote: str | None = Field(default=None, alias="TextAfterVote")
+
+
+class DivisionMember(_WireModel):
+    """One member's vote in a division.
+
+    ``MemberId`` is the same identifier that appears on contributions, which is
+    what lets a vote join to a speaker without any name matching.
+    """
+
+    member_id: int = Field(alias="MemberId")
+    list_as: str | None = Field(default=None, alias="ListAs")
+    display_as: str | None = Field(default=None, alias="DisplayAs")
+    party: str | None = Field(default=None, alias="Party")
+    is_teller: bool = Field(default=False, alias="IsTeller")
+
+
+class DivisionDetail(DivisionSummary):
+    """A division including the members who voted each way."""
+
+    aye_members: list[DivisionMember] = Field(default_factory=list, alias="AyeMembers")
+    noe_members: list[DivisionMember] = Field(default_factory=list, alias="NoeMembers")

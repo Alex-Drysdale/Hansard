@@ -7,6 +7,8 @@ string is read, and what counts as speech.
 
 from __future__ import annotations
 
+from datetime import date
+
 import pytest
 
 from hansard.api.models import DebateDetail
@@ -158,10 +160,12 @@ def test_count_words() -> None:
 class TestNormaliseDebate:
     def test_reads_the_overview(self, debate_with_speeches: DebateDetail) -> None:
         row = normalise_debate(debate_with_speeches).debate
-        assert row.ext_id == "69FFB3CB-33EF-41DD-94B0-E8685BEB39EF"
+        # Canonicalised to lowercase: the same section arrives uppercase from
+        # one endpoint and lowercase from another, so raw text would not join.
+        assert row.ext_id == "69ffb3cb-33ef-41dd-94b0-e8685beb39ef"
         assert row.title == "Oil Refining Sector"
         assert row.house == "Commons"
-        assert row.sitting_date == "2026-01-14"
+        assert row.sitting_date == date(2026, 1, 14)
         assert row.location == "Commons Chamber"
 
     def test_titles_are_stripped(self, debate_child: DebateDetail) -> None:
@@ -170,7 +174,7 @@ class TestNormaliseDebate:
 
     def test_parent_comes_from_the_navigator_trail(self, debate_child: DebateDetail) -> None:
         row = normalise_debate(debate_child).debate
-        assert row.parent_ext_id == "565DB7B1-4CBD-4BD7-86F2-F89DAC86A758"
+        assert row.parent_ext_id == "565db7b1-4cbd-4bd7-86f2-f89dac86a758"
         assert row.parent_title == "Petition"
 
     def test_top_level_debate_points_at_the_day_root(

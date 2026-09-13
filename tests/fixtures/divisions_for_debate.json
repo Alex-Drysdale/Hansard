@@ -1,0 +1,24 @@
+[
+  {
+    "Id": 64918,
+    "Time": "16:12:00",
+    "Date": "2026-01-20T16:12:00",
+    "DivisionHasTime": true,
+    "ExternalId": "77C90213-B8CB-49BD-B9A4-A48F8761E174",
+    "AyesCount": 319,
+    "NoesCount": 127,
+    "House": "Commons",
+    "DebateSection": "Sentencing Bill",
+    "DebateSectionSource": "2",
+    "Number": "410",
+    "DebateSectionExtId": "03C3B458-FF3D-45ED-BCBC-D36DABCAA6B2",
+    "MemberVotedAye": null,
+    "TextBeforeVote": "<em><em>The House divided:</em></em>",
+    "TextAfterVote": "<em>Question accordingly agreed to.</em>",
+    "EVELType": null,
+    "EVELInfo": null,
+    "EVELAyesCount": null,
+    "EVELNoesCount": null,
+    "IsCommitteeDivision": false
+  }
+]

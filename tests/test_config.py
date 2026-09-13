@@ -10,7 +10,6 @@ from __future__ import annotations
 import os
 from dataclasses import FrozenInstanceError
 from datetime import date
-from pathlib import Path
 
 import pytest
 
@@ -59,11 +58,11 @@ class TestValidation:
 
 
 class TestFromEnv:
-    def test_reads_overrides(self, monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    def test_reads_overrides(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setenv("HANSARD_HOUSE", "Lords")
         monkeypatch.setenv("HANSARD_START_DATE", "2026-02-01")
         monkeypatch.setenv("HANSARD_END_DATE", "2026-02-28")
-        monkeypatch.setenv("HANSARD_DB_PATH", str(tmp_path / "custom.db"))
+        monkeypatch.setenv("HANSARD_DATABASE_URL", "postgresql://u:p@db:5432/custom")
         monkeypatch.setenv("HANSARD_REQUESTS_PER_SECOND", "2.5")
 
         settings = Settings.from_env()
@@ -71,7 +70,7 @@ class TestFromEnv:
         assert settings.house == "Lords"
         assert settings.start_date == date(2026, 2, 1)
         assert settings.end_date == date(2026, 2, 28)
-        assert settings.database_path == tmp_path / "custom.db"
+        assert settings.database_url == "postgresql://u:p@db:5432/custom"
         assert settings.requests_per_second == 2.5
 
     def test_blank_values_fall_back_to_defaults(self, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -91,7 +90,15 @@ class TestFromEnv:
     def test_trailing_slash_on_base_url_is_removed(self, monkeypatch: pytest.MonkeyPatch) -> None:
         # Otherwise every request path would contain a double slash.
         monkeypatch.setenv("HANSARD_BASE_URL", "https://example.test/")
-        assert Settings.from_env().base_url == "https://example.test"
+        monkeypatch.setenv("MEMBERS_BASE_URL", "https://members.test/")
+        settings = Settings.from_env()
+        assert settings.hansard_base_url == "https://example.test"
+        assert settings.members_base_url == "https://members.test"
+
+    def test_rejects_an_unknown_log_format(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        monkeypatch.setenv("HANSARD_LOG_FORMAT", "xml")
+        with pytest.raises(ConfigError, match="log_format"):
+            Settings.from_env()
 
 
 def test_settings_are_immutable() -> None:

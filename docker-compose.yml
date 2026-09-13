@@ -1,0 +1,67 @@
+# Local development stack.
+#
+#   docker compose up -d db      start Postgres
+#   hansard migrate              bring the schema up to date
+#   hansard ingest               fill it
+#
+# The database is the only thing that needs to be a service. The pipeline runs
+# on the host during development so that an edit-run cycle does not involve a
+# rebuild; `docker compose --profile scheduler up` runs it in a container when
+# you want the scheduled behaviour instead.
+
+name: hansard
+
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: hansard-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-hansard}
+      POSTGRES_USER: ${POSTGRES_USER:-hansard}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hansard}
+      # Deterministic collation, so ORDER BY does not depend on the host locale.
+      POSTGRES_INITDB_ARGS: "--locale=C --encoding=UTF8"
+    ports:
+      # Host port is configurable: 5432 is often already taken by a local install.
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      # Other services must wait for readiness, not merely for the container to
+      # start: Postgres accepts connections only after its init scripts finish.
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-hansard} -d ${POSTGRES_DB:-hansard}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    command:
+      # This is a local analytics database on a developer laptop, not a
+      # transactional system of record: the data is always re-fetchable from
+      # Parliament, so we trade durability guarantees for bulk-write speed.
+      - postgres
+      - -c
+      - synchronous_commit=off
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - work_mem=32MB
+
+  scheduler:
+    # Opt-in: `docker compose --profile scheduler up -d`
+    profiles: ["scheduler"]
+    build: .
+    container_name: hansard-scheduler
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Inside the compose network the database is reachable by service name,
+      # on its own port, regardless of what the host port was remapped to.
+      HANSARD_DATABASE_URL: postgresql://${POSTGRES_USER:-hansard}:${POSTGRES_PASSWORD:-hansard}@db:5432/${POSTGRES_DB:-hansard}
+      HANSARD_LOG_FORMAT: json
+    command: ["hansard", "schedule"]
+
+volumes:
+  pgdata:

@@ -1,0 +1,62 @@
+{
+  "value": {
+    "id": 467,
+    "nameListAs": "Hoyle, Sir Lindsay",
+    "nameDisplayAs": "Sir Lindsay Hoyle",
+    "nameFullTitle": "Rt Hon Sir Lindsay Hoyle MP",
+    "nameAddressAs": "Sir Lindsay",
+    "latestParty": {
+      "id": 47,
+      "name": "Speaker",
+      "abbreviation": "Spk",
+      "backgroundColour": null,
+      "foregroundColour": null,
+      "isLordsMainParty": false,
+      "isLordsSpiritualParty": false,
+      "governmentType": null,
+      "isIndependentParty": false
+    },
+    "gender": "M",
+    "latestHouseMembership": {
+      "membershipFrom": "Chorley",
+      "membershipFromId": 3985,
+      "house": 1,
+      "membershipStartDate": "1997-05-01T00:00:00",
+      "membershipEndDate": null,
+      "membershipEndReason": null,
+      "membershipEndReasonNotes": null,
+      "membershipEndReasonId": null,
+      "membershipStatus": {
+        "statusIsActive": true,
+        "statusDescription": "Current Member",
+        "statusNotes": null,
+        "statusId": 0,
+        "status": 0,
+        "statusStartDate": "2024-07-04T00:00:00"
+      }
+    },
+    "thumbnailUrl": "https://members-api.parliament.uk/api/Members/467/Thumbnail"
+  },
+  "links": [
+    {
+      "rel": "self",
+      "href": "/Members/467",
+      "method": "GET"
+    },
+    {
+      "rel": "overview",
+      "href": "/Members/467",
+      "method": "GET"
+    },
+    {
+      "rel": "synopsis",
+      "href": "/Members/467/Synopsis",
+      "method": "GET"
+    },
+    {
+      "rel": "contactInformation",
+      "href": "/Members/467/Contact",
+      "method": "GET"
+    }
+  ]
+}
